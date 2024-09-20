@@ -1,17 +1,25 @@
 "use client"
 
-import React, {useState, KeyboardEvent} from 'react';
-import {useRouter} from "next/navigation";
+import React, {useState, KeyboardEvent, useEffect} from 'react';
+import {useRouter, useSearchParams} from "next/navigation";
 
 function Searchbar() {
     const [search, setSearch] = useState("");
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const q = searchParams.get("q");
+
+    useEffect(() => {
+       setSearch(q || "");
+    }, [q]);
 
     const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
     }
 
     const onSubmit = () => {
+        if (!search || q === search) return;
         router.push(`/search?q=${search}`);
     }
 
