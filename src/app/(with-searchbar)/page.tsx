@@ -3,6 +3,7 @@ import {BookData} from "@/type";
 import {delay} from "@/util/delay";
 import {Suspense} from "react";
 import LoadingDeprecated from "@/app/(with-searchbar)/search/loading-deprecated";
+import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 
 // export const dynamic="";
 // 특정 페이지의 유형을 강제로 static, dynamic 페이지로 설정
@@ -48,7 +49,7 @@ export default function Home() {
         <div className="d-flex flex-column" style={{gap: "20px"}}>
             <section>
                 <h3 className="fw-bold mb-5">지금 추천하는 도서</h3>
-                <Suspense fallback={<LoadingDeprecated/>}><RecoBooks/></Suspense>
+                <Suspense fallback={<BookListSkeleton count={3}/> }><RecoBooks/></Suspense>
             </section>
             <section>
                 <h3 className="fw-bold mb-5">등록된 모든 도서</h3>
