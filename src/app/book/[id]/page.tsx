@@ -1,10 +1,19 @@
 import styles from "./[id].module.css";
-import allBooks from "@/mock/books.json";
+import {BookData} from "@/type";
 
-export default function Page({params}: { params: { id: string } }) {
+export default async function Page({params}: { params: { id: string } }) {
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${params.id}`);
+
+    if(!response.ok) {
+        return <div>오류가 발생했습니다.</div>
+    }
+
+    const book: BookData = await response.json();
+
     const {
         title, subTitle, author, coverImgUrl, description, publisher
-    } = allBooks[params.id];
+    } = book;
     return (
 
         <div className="d-flex flex-column" style={{gap: 10}}>
