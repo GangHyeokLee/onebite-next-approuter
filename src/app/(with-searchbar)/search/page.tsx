@@ -1,15 +1,16 @@
 import BookItem from "@/components/book-item";
 import {BookData} from "@/type";
 
-export default async function Page({searchParams}:{
-    searchParams:{
-        q?:string;
-    };
-}){
+export default async function Page(
+    {searchParams}: {
+        searchParams: {
+            q?: string;
+        };
+    }) {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${searchParams.q}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${searchParams.q}`, {cache: "force-cache"});
 
-    if(!response.ok) {
+    if (!response.ok) {
         return <div>오류가 발생했습니다.</div>
     }
 
@@ -17,7 +18,8 @@ export default async function Page({searchParams}:{
 
     return (
         <div>
-            {books.filter(book => book.title.includes(searchParams.q)).map((book) => <BookItem key={book.id} {...book} />)}
+            {books.filter(book => book.title.includes(searchParams.q)).map((book) => <BookItem
+                key={book.id} {...book} />)}
         </div>
     )
 }

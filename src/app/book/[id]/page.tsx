@@ -1,11 +1,21 @@
 import styles from "./[id].module.css";
 import {BookData} from "@/type";
+import {notFound} from "next/navigation";
 
-export default async function Page({params}: { params: { id: string } }) {
+// export const dynamicParams = false;
+
+export function generateStaticParams() {
+    return [{id: "1"}, {id: "2"}, {id: "3"},]
+}
+
+export default async function Page({params}: { params: { id: string | string[] } }) {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${params.id}`);
 
-    if(!response.ok) {
+    if (!response.ok) {
+        if(response.status === 404){
+            notFound();
+        }
         return <div>오류가 발생했습니다.</div>
     }
 
