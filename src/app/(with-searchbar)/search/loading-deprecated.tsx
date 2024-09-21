@@ -1,6 +1,6 @@
 // import styles from "./loading.module.css"
 
-export default function Loading() {
+export default function LoadingDeprecated() {
     return (
         <div className={"d-flex justify-content-center align-items-center"}>
             <div className="spinner-border text-secondary" role="status">

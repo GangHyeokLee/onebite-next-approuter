@@ -1,5 +1,8 @@
 import BookItem from "@/components/book-item";
 import {BookData} from "@/type";
+import {delay} from "@/util/delay";
+import {Suspense} from "react";
+import LoadingDeprecated from "@/app/(with-searchbar)/search/loading-deprecated";
 
 // export const dynamic="";
 // 특정 페이지의 유형을 강제로 static, dynamic 페이지로 설정
@@ -9,6 +12,7 @@ import {BookData} from "@/type";
 // 4. error: 페이지를 강제로 Static 페이지로 설정 (설정하면 안 되는 이유 -> 빌드오류)
 
 async function AllBooks() {
+    await delay(1500);
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`);
 
     if (!response.ok) {
@@ -24,6 +28,8 @@ async function AllBooks() {
 }
 
 async function RecoBooks() {
+    await delay(5000);
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`, {next: {revalidate: 3}});
     const recoBooks: BookData[] = await response.json();
 
@@ -34,18 +40,19 @@ async function RecoBooks() {
     )
 }
 
-export default async function Home() {
+export const dynamic = "force-dynamic";
 
+export default function Home() {
 
     return (
         <div className="d-flex flex-column" style={{gap: "20px"}}>
             <section>
                 <h3 className="fw-bold mb-5">지금 추천하는 도서</h3>
-                <RecoBooks/>
+                <Suspense fallback={<LoadingDeprecated/>}><RecoBooks/></Suspense>
             </section>
             <section>
                 <h3 className="fw-bold mb-5">등록된 모든 도서</h3>
-                <AllBooks/>
+                <Suspense fallback={<LoadingDeprecated/>}><AllBooks/></Suspense>
             </section>
         </div>
     );
