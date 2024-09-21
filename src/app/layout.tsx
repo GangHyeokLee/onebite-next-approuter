@@ -1,5 +1,21 @@
 import "./globals.css";
 import Link from "next/link";
+import {BookData} from "@/type";
+
+async function Footer(){
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`);
+    if(!response.ok){
+        return <div>제작 @이강혁</div>
+    }
+
+    const books: BookData[] = await response.json();
+    const bookCount = books.length;
+    return <footer>
+        <div>제작 @이강혁</div>
+        <div>{bookCount} 권의 도서가 등록되어 있습니다.</div>
+
+    </footer>
+}
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
@@ -12,7 +28,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
             <main className="pt-3">
                 {children}
             </main>
-            <footer className="py-5 px-0">제작 @이강혁</footer>
+            <Footer/>
         </div>
         </body>
         </html>
