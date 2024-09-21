@@ -1,4 +1,5 @@
 import "./globals.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from "next/link";
 import {BookData} from "@/type";
 

@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import BookItem from "@/components/book-item";
 import {BookData} from "@/type";
 

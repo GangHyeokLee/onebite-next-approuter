@@ -25,7 +25,6 @@ export default async function Page({params}: { params: { id: string | string[] }
         title, subTitle, author, coverImgUrl, description, publisher
     } = book;
     return (
-
         <div className="d-flex flex-column" style={{gap: 10}}>
             <div style={{
                 backgroundImage: `url('${coverImgUrl}')`,
